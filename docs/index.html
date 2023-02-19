@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simon Game</title>
+    <link rel="stylesheet" type="text/css" href="simon.css" />
+    <link rel="icon" type="image/x-icon" href="images/favicon.png" />
+</head>
+
+<body>
+    <section id="info">
+        <div class="instruction-container show-instructions">
+            <div class="heading">
+                <h2>Instructions</h2>
+                <button class="indicator-btn">+</button>
+            </div>
+            <ul>
+                <li class="intructions"><span class="bold">Step&nbsp1:</span>
+                    <p>
+                        Press the <span class="special power-icon">Power</span> button to power on
+                        the game.
+                    </p>
+                </li>
+                <li class="intructions"><span class="bold">Step&nbsp2:</span>
+                    <p>
+                        Press the <span class="special start-icon">Start</span> button to start the game.
+                    </p>
+                </li>
+                <li class="intructions"><span class="bold">Step&nbsp3:</span>
+                    <p>
+                        The colors will flash in a particular order one by one and stop.<br>
+                        You have to remember the order.
+                    </p>
+                </li>
+                <li class="intructions"><span class="bold">Step&nbsp4:</span>
+                    <p>
+                        Once they stop you are supposed to click on the colors one by one in the same order.
+                    </p>
+                </li>
+                <li class="intructions"><span class="bold">Step&nbsp5:</span>
+                    <p>
+                        If the order is correct you will step up to the next level.<br>
+                        If not then you can try again.
+                    </p>
+                </li>
+                <li class="intructions"><span class="bold note">Note:</span>
+                    <p>
+                        In <span class="red mode-icon">Hard</span> mode, on every failed attempt you will jump back to
+                        Level 0
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="simon-game">
+        <div id="game-container">
+            <div id="outer-circle">
+                <div id="blank"></div>
+                <div id="green" class="quarter">
+                    <audio id="beep1">
+                        <source src="sounds/beep1.mp3" type="audio/mp3">
+                        </source>
+                    </audio>
+                </div>
+                <div id="red" class="quarter">
+                    <audio id="beep2">
+                        <source src="sounds/beep2.mp3" type="audio/mp3">
+                        </source>
+                    </audio>
+                </div>
+                <div id="yellow" class="quarter">
+                    <audio id="beep3">
+                        <source src="sounds/beep3.mp3" type="audio/mp3">
+                        </source>
+                    </audio>
+                </div>
+                <div id="blue" class="quarter">
+                    <audio id="beep4">
+                        <source src="sounds/beep4.mp3" type="audio/mp3">
+                        </source>
+                    </audio>
+                </div>
+                <div id="inner-circle">
+                    <h1 id="game-name">Simon</h1>
+                    <button class="start-btn">Start</button>
+                    <p id="level"></p>
+                    <div class="mode-btn" data-strict-mode="0">
+                        <span class="mode-text">Easy</span>
+                        <img class="mode-img" src="images/easy.png" />
+                    </div>
+                    <div class="power-btn">
+                        <img class="focus" src="images/power-off.png" />
+                        <span class="power-text">Power</span>
+                    </div>
+
+                </div>
+                <div id="message-container">
+                    <p id="message">Message</p>
+                </div>
+
+
+                <audio id="error-beep">
+                    <source src="sounds/error.mp3" type="audio/mp3">
+                    </source>
+                </audio>
+                <audio id="fail-beep">
+                    <source src="sounds/fail.mp3" type="audio/mp3">
+                    </source>
+                </audio>
+                <audio id="win-beep">
+                    <source src="sounds/win.mp3" type="audio/mp3">
+                    </source>
+                </audio>
+                <audio id="button-beep">
+                    <source src="sounds/button.mp3" type="audio/mp3">
+                    </source>
+                </audio>
+                <audio id="start-beep">
+                    <source src="sounds/start.mp3" type="audio/mp3">
+                    </source>
+                </audio>
+                <audio id="try-beep">
+                    <source src="sounds/tryagain.mp3" type="audio/mp3">
+                    </source>
+                </audio>
+                <audio id="game-won-beep">
+                    <source src="sounds/gamewon.mp3" type="audio/mp3">
+                    </source>
+                </audio>
+            </div>
+        </div>
+    </section>
+
+
+    <script src="simon.js"></script>
+</body>
+
+</html>

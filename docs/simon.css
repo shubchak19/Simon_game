@@ -1,0 +1,446 @@
+/* OVERALL PAGE */
+
+html * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+}
+
+
+body {
+    background-color: beige;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    align-items: center;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    font-family: Helvetica, sans-serif;
+    gap: 2em;
+    padding: 2em 1em;
+}
+
+/* User Info */
+#info {
+    width: 25em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 1.5em;
+    border-radius: 2em;
+    background-color: rgb(250, 236, 173);
+    box-shadow: 5px 5px 10px rgb(185, 175, 127);
+    height: fit-content;
+    font-size: 0.9rem;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.instruction-container .bold {
+    color: darkgreen;
+    display: inline-block;
+}
+
+.instruction-container .note {
+    color: darkred;
+    font-size: 1.2em;
+    margin-top: -0.2em;
+    text-decoration: 2px underline;
+}
+
+.instruction-container .heading {
+    padding-bottom: 0.3em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.heading h2:hover {
+    text-decoration: 3px black underline;
+}
+
+.heading h2 {
+    text-decoration: underline;
+}
+
+.indicator-btn {
+    font-size: 1.4rem;
+    margin-bottom: -0.2em;
+    border-radius: 50%;
+    padding: 0.05em 0.35em;
+    border: none;
+    background-color: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.show-instructions .indicator-btn {
+    transform: rotate(135deg);
+}
+
+.instruction-container ul {
+    list-style-type: none;
+    padding: 0 0.5em;
+    max-height: 0;
+    transition: max-height 0.3s;
+    overflow: hidden;
+}
+
+.show-instructions ul {
+    max-height: 35em;
+    overflow: hidden;
+}
+
+.instruction-container li {
+    margin: 1em 0;
+    display: flex;
+    gap: 0.5em;
+    align-items: flex-start;
+}
+
+.power-icon::before,
+.start-icon::before,
+.mode-icon::after {
+    content: "";
+    overflow: hidden;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 1.1em;
+    width: 1.12em;
+    margin: 0 0.3em;
+    border: 2px solid black;
+    display: inline-block;
+    border-radius: 50%;
+    vertical-align: bottom;
+}
+
+.power-icon::before {
+    background-image: url("images/power-off.png");
+}
+
+.start-icon::before {
+    text-align: center;
+    background-color: darkgreen;
+}
+
+.mode-icon::after {
+    background-image: url("images/hard.png");
+    border: none;
+    background-color: white;
+    height: 1.4em;
+    width: 1.35em;
+    margin: 0 0.5em;
+}
+
+.special {
+    font-weight: bold;
+    display: inline-block;
+}
+
+.red {
+    color: white;
+    font-weight: bold;
+    background-color: darkred;
+    padding: 0.3em;
+}
+
+/* OUTER CIRCLE */
+
+#game-container {
+    aspect-ratio: 1/1;
+    width: min(80vw, 80vh);
+    min-height: 350px;
+    min-width: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-name {
+    display: none;
+}
+
+#blank {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 1;
+}
+
+#outer-circle {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    border: 10px solid black;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    gap: 0.5em;
+    background-color: black;
+}
+
+.quarter {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    box-sizing: border-box;
+    user-select: none;
+    transition: background-color 0.2s;
+}
+
+#green {
+    background-color: darkgreen;
+}
+
+#red {
+    background-color: darkred;
+}
+
+#yellow {
+    background-color: goldenrod;
+}
+
+#blue {
+    background-color: darkblue;
+}
+
+/* INNER CIRCLE */
+
+#inner-circle {
+    position: absolute;
+    border: 7px solid black;
+    height: 50%;
+    width: 50%;
+    border-radius: 50%;
+    background-color: blanchedalmond;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5em;
+    box-sizing: border-box;
+}
+
+#game-name {
+    font-size: clamp(1rem, 5vw, 2.4rem);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.start-btn {
+    font-size: 1.5rem;
+    width: 4em;
+    height: 4em;
+    border-radius: 50%;
+    background-color: green;
+    color: aliceblue;
+    cursor: pointer;
+    border: 5px solid black;
+    transition: all 0.2s ease;
+}
+
+#level {
+    position: absolute;
+    top: -1.98em;
+    background-color: darkred;
+    color: red;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2em;
+    width: 3.5em;
+    text-align: center;
+    border: 5px solid black;
+    overflow: hidden;
+}
+
+
+.power-btn,
+.mode-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: absolute;
+    cursor: pointer;
+    z-index: 3;
+    color: white;
+    font-weight: bold;
+    background-color: black;
+    border-radius: 0.2em;
+    width: fit-content;
+    gap: 0.3em;
+    padding: 0.6em 0.5em;
+    right: -6.1em;
+    user-select: none;
+    font-size: 0.95rem;
+}
+
+.power-btn img,
+.mode-btn img {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    outline-offset: 2px;
+}
+
+.power-btn img:active,
+.start-btn:active,
+.mode-btn img:active {
+    transform: scale(0.95);
+    box-shadow: none;
+}
+
+
+.mode-btn {
+    padding: 0.7em;
+    left: -6.1em;
+    z-index: 0;
+    gap: 0.7em;
+}
+
+.mode-img {
+    background-color: white;
+    outline: 4px solid green;
+}
+
+.mode-text {
+    color: green;
+}
+
+.mode-btn[data-strict-mode="1"] img {
+    outline: 4px solid red;
+}
+
+.mode-btn[data-strict-mode="1"] .mode-text {
+    color: red;
+}
+
+
+#message-container {
+    position: absolute;
+    top: 42%;
+    width: 100%;
+    height: 4em;
+    background-color: rgb(32, 178, 56);
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    z-index: 3;
+    opacity: 0;
+    box-shadow: 0 0 20px 10px black;
+}
+
+#message {
+    color: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    letter-spacing: 1px;
+    font-size: 2rem;
+}
+
+@media screen and (min-width: 600px) {
+    #game-container {
+        min-height: 600px;
+        min-width: 600px;
+    }
+
+    #game-name {
+        display: block;
+    }
+
+    #info {
+        font-size: 1rem;
+    }
+
+    #outer-circle {
+        border: 13px solid black;
+        gap: 0.75em;
+    }
+
+    #inner-circle {
+        border: 10px solid black;
+    }
+
+    #level {
+        position: static;
+        font-size: 1.3rem;
+        width: 4em;
+    }
+
+    .power-btn,
+    .mode-btn {
+        right: -8.1em;
+        padding: 0.6em 0.8em;
+        font-size: 1rem;
+        gap: 0.8em;
+    }
+
+    .mode-btn {
+        padding: 0.8em 1em;
+        left: -7.8em;
+        gap: 1em;
+    }
+
+    .power-btn img,
+    .mode-btn img {
+        height: 40px;
+        width: 40px;
+    }
+
+    #message-container {
+        height: 5em;
+    }
+
+    #message {
+        font-size: 2.5rem;
+    }
+
+}
+
+@media screen and (min-width: 1200px) {
+    body {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+        overflow: hidden;
+    }
+
+}
+
+@keyframes round-focus {
+    0% {
+        outline: 10px double darkgreen;
+        outline-offset: 15px;
+    }
+
+    50% {
+        outline: 10px double darkgreen;
+        outline-offset: 3px;
+    }
+
+    100% {
+        outline: 10px double darkgreen;
+        outline-offset: 15px;
+    }
+}
+
+.focus {
+    animation: round-focus 1s ease infinite;
+    z-index: 2;
+}
