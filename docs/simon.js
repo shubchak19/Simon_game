@@ -58,7 +58,6 @@ startBtn.addEventListener("click", () => {
 });
 
 instructions.addEventListener("click", () => {
-    let indicator = instructions.querySelector(".indicator-btn");
     if (instructions.parentElement.classList.contains("show-instructions")) {
         instructions.parentElement.classList.remove("show-instructions");
     } else {
@@ -82,27 +81,9 @@ modeBtn.addEventListener("click", () => {
     }
 })
 
-
-// Adding event listeners
 events();
 
-
 // Defining functions
-function powerStatus() {
-    let powerImg = powerBtn.querySelector("img");
-    if (power) {
-        powerImg.src = "images/power-on.png";
-        powerImg.classList.remove("focus");
-        blank.style.display = "none";
-        if (intro) {
-            startBtn.classList.add("focus");
-        }
-    } else {
-        powerImg.src = "images/power-off.png";
-        blank.style.removeProperty("display");
-        startBtn.classList.remove("focus");
-    }
-}
 
 function playPattern(time) {
     if (levelCount <= 10) {
@@ -115,19 +96,13 @@ function playPattern(time) {
             } else {
                 clearInterval(simon);
                 userTurn = true;
-                if (intro) {
-                    flash = setInterval(() => {
-                        flashColor(quarter.indexOf(pattern[0]), 1000);
-                    }, 1500);
-                }
+                playFlash();
             }
         }, time + 200);
     } else {
         showMessage(11);
     }
 }
-
-
 
 function flashRandomElement(time) {
     let index = Math.floor(Math.random() * 4);
@@ -167,7 +142,57 @@ function defaultColor() {
     })
 }
 
-function checkElement(element) {
+function playFlash() {
+    if (flash !== undefined) {
+        clearInterval(flash);
+        flash = undefined;
+    }
+    if (intro) {
+        if (pattern.length > 0) {
+            flash = setInterval(() => {
+                flashColor(quarter.indexOf(pattern[0]), 1000);
+            }, 1800);
+        }
+    }
+}
+
+function events() {
+    quarter.forEach((element, index) => {
+        element.addEventListener("click", () => {
+            if (userTurn) {
+                if (matchElement(element)) {
+                    audios[index].play();
+                    playFlash();
+                } else {
+                    intro ? errorBeep.play() : "";
+                }
+            }
+            else {
+                if (pattern.length === 0) {
+                    errorBeep.play();
+                    startBtn.classList.add("focus");
+                }
+            }
+        });
+
+        // Using conditonal operator instead of if else
+        element.addEventListener("mousedown", () => {
+            userTurn ? flashColor(index) : "";
+        });
+        element.addEventListener("touchstart", () => {
+            userTurn ? flashColor(index) : "";
+        });
+
+        element.addEventListener("mouseup", () => {
+            userTurn ? defaultColor() : "";
+        });
+        element.addEventListener("touchend", () => {
+            userTurn ? defaultColor() : "";
+        });
+    })
+}
+
+function matchElement(element) {
     if (pattern[0] === element) {
         pattern.shift();
         if (pattern.length === 0) {
@@ -178,56 +203,10 @@ function checkElement(element) {
         }
         return true;
     } else {
-        error = true;
         level.innerText = "NO!";
         setTimeout(() => {
             updatePoints();
         }, 500);
-        return false;
-    }
-}
-
-function events() {
-    quarter.forEach((element, index) => {
-        element.addEventListener("click", () => {
-            if (userTurn) {
-                playGame(element);
-                if (error !== true) {
-                    audios[index].play();
-                    if (intro) {
-                        if (flash !== undefined) {
-                            clearInterval(flash);
-                            if (pattern.length > 0) {
-                                flash = setInterval(() => {
-                                    flashColor(quarter.indexOf(pattern[0]), 1000);
-                                }, 1500);
-                            }
-                        }
-                    }
-                } else {
-                    if (intro) {
-                        errorBeep.play();
-                    }
-                    error = false;
-                }
-            }
-            else {
-                startBtn.classList.add("focus");
-            }
-        });
-        element.addEventListener("mousedown", () => {
-            // Using conditonal operator instead of if else
-            userTurn ? flashColor(index) : "";
-
-        });
-        element.addEventListener("mouseup", defaultColor);
-    })
-}
-
-function playGame(element) {
-    let match = checkElement(element);
-    if (!match) {
-        error = true;
         if (!intro) {
             userTurn = false;
             pattern = [];
@@ -239,6 +218,7 @@ function playGame(element) {
                 showMessage();
             }
         }
+        return false;
     }
 }
 
@@ -260,9 +240,7 @@ function showMessage(number) {
         case 1: text = "Well Done!";
             winBeep.play();
             intro = false;
-            if (flash !== undefined) {
-                clearInterval(flash);
-            };
+            playFlash();
             break;
 
         case 2: text = "Keep up the progress";
@@ -301,7 +279,7 @@ function showMessage(number) {
             winBeep.play();
             break;
 
-        case 11: text = "Game has ended Reload!";
+        case 11: text = "Game has ended Reload page";
             gameWonBeep.play();
             break;
 
@@ -319,5 +297,21 @@ function showMessage(number) {
     messageContainer.style.opacity = "1";
     setTimeout(() => {
         messageContainer.style.opacity = "0";
-    }, 2500);
+    }, 2000);
+}
+
+function powerStatus() {
+    let powerImg = powerBtn.querySelector("img");
+    if (power) {
+        powerImg.src = "images/power-on.png";
+        powerImg.classList.remove("focus");
+        blank.style.display = "none";
+        if (intro) {
+            startBtn.classList.add("focus");
+        }
+    } else {
+        powerImg.src = "images/power-off.png";
+        blank.style.removeProperty("display");
+        startBtn.classList.remove("focus");
+    }
 }
